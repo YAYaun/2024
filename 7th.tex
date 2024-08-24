@@ -1,0 +1,73 @@
+\documentclass{article}  
+\begin{document}  
+\title{Study Git and LaTeX}  
+\author{Donglin Yuan}  
+\maketitle  
+\section{Basic Grammar}  
+\begin{enumerate}  
+    \item Basic  
+    \begin{itemize}  
+        \item[1] \texttt{git config --global user.name "enter your name"} \\
+        This command sets your user name.  
+        \item[2] \texttt{git config --global user.email "enter your email"} \\
+        Similar to above.  
+        \item[3] \texttt{ssh-keygen -t rsa -C "your email"} \\
+        It is worth mentioning that your computer must have SSH enabled to connect successfully.  
+        \item[4] \texttt{ssh -T git@github.com} \\
+        This command tests whether you have connected to github.com.  
+    \end{itemize}  
+    
+    \item Advanced a little  
+    \begin{itemize}  
+        \item[5] \texttt{git init} \\
+        This command initializes a folder.  
+        \item[6] \texttt{git clone git@github.com:user\_name/repositories\_name.git} \\
+        Put the repositories into your own folder on the computer.  
+        \item[7] \texttt{git add foldername} or \texttt{git add filename} \\
+        Adds these to the staging area.  
+        \item[8] \texttt{git commit -m "annotation"} \\
+        This command creates a commit with a message.  
+        \item[9] \texttt{git push origin (master/newBranch\_name)} \\
+        Push the file to the repositories on github.com.  
+    \end{itemize}  
+    \item Advanced more maybe  
+    \begin{itemize}  
+        \item[10] \texttt{git log} \\
+        Look up history.  
+        \item[11] \texttt{git reset --hard "version\_number"} \\
+        This resets the version.  
+    \end{itemize}  
+    \item Branch Commands  
+    \begin{itemize}  
+        \item[12] \texttt{git branch "newBranchName"} \\
+        Creates a new branch.  
+        \item[13] \texttt{git branch -v} \\
+        To know how many branches exist.  
+        \item[14] \texttt{git checkout "branchName"} \\
+        To switch to another branch.  
+        \item[15] \texttt{git merge "mergedBranchName"} \\
+        Merges the specified branch into your current branch.  
+        \item[16] \texttt{git branch -a} \\
+        Shows local and remote branches.  
+    \end{itemize}  
+    \item Something interesting  
+    \begin{itemize}  
+        \item[17] \texttt{git diff --shortstat "@{0 day ago}"} \\
+        Shows how much work you've done.  
+        \item[18] \texttt{git checkout .} \\
+        Restores all files from the staging area to the working directory.  
+        \item[19] \texttt{git checkout [file]} \\
+        Restores this specific file from the staging area to the working directory.  
+        \item[20] \texttt{git push [remote] [branch]} \\
+        Pushes the branch to the remote repository.  
+        \item[21] \texttt{git reflog} \\
+        Shows your recent commit history.  
+        \item[22] \texttt{git diff} \\
+        Shows differences between the working directory and the staging area.  
+        \item[23] \texttt{git status} \\
+        Shows which files are modified.  
+        \item[24] \texttt{git log --stat} \\
+        Shows the history of commits and which files were modified each time.  
+    \end{itemize}  
+\end{enumerate}
+\end{document} 
