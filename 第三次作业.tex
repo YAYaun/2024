@@ -1,0 +1,161 @@
+\documentclass{article}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[UTF8]{ctex}
+\usepackage{listings}  
+\lstset{  
+    basicstyle=\ttfamily,  
+    numbers=left,  
+    numberstyle=\small,  
+    frame=single,  
+    showstringspaces=false,  
+    language=Python  
+}  
+\begin{document}
+\title{中国海洋大学实验报告}
+\maketitle
+\title{shell，vim，数据整理的学习\\https://github.com/YAYaun/2024\\}
+\author{袁东霖}
+\maketitle
+\section{\textcolor{blue}{Creating and Navigating Directories}}
+\begin{itemize}
+    \item \texttt{mkdir -p "name"}：创建并打开 \texttt{name}，如果没有父目录则一并创建。
+    \item \texttt{cd "name"}：进入 \texttt{name} 目录。
+\end{itemize}
+
+\section{\textcolor{blue}{Viewing Help Documentation}}
+\begin{itemize}
+    \item \texttt{man 函数名}：查看函数的帮助文档。
+\end{itemize}
+
+\section{\textcolor{blue}{Viewing Files（课后习题)}}
+\begin{itemize}
+    \item \texttt{ls -a}：查看所有文件，包含隐藏文件。
+    \item \texttt{ls -lah}：以长文件形式显示，以人类可读的形式显示。
+    \item \texttt{ls -lt}：显示最新修改的文件。
+    \item \texttt{ls -lu}：显示最新访问的文件。
+\end{itemize}{{Battery Information}}
+\begin{itemize}
+    \item \texttt{cat /sys/class/power\_supply/BAT0/capacity}：获取电池信息。
+\end{itemize}
+\section{\textcolor{blue}{Shell基本知识}}
+返回值短路
+\begin{lstlisting}
+false || echo "Oops, fail"
+# Oops, fail
+true || echo "Will not be printed"
+#
+true && echo "Things went well"
+# Things went well
+false && echo "Will not be printed"
+#
+false ; echo "This will always run"
+# This will always run
+\end{lstlisting}
+\section{\textcolor{blue}{shell脚本的通配操作}}
+\begin{lstlisting}  
+# convert image.{png,jpg}   
+convert image.png image.jpg  
+\end{lstlisting}  
+  
+\section{\textcolor{blue}{Marco and Polo Functions(课后习题)}}
+\begin{itemize}
+    \item \texttt{marco()\{ export marcoPath=\$(pwd); \}}：定义 \texttt{marco} 函数，保存当前路径。
+    \item \texttt{polo()\{ cd "\$marcoPath"; \}}：定义 \texttt{polo} 函数，返回 \texttt{marco} 保存的路径。
+\end{itemize}
+\section{\textcolor{blue}{Shell时间操作 }}
+    \verb+echo "Starting program at $(date)" # date会被替换成日期和时间 + 
+\section{\textcolor{blue}{Shell输入参数倒序输出}}
+\begin{lstlisting}
+import sys
+for arg in reversed(sys.argv[1:]):
+    print(arg)
+\end{lstlisting}
+\section{\textcolor{blue}{Shell查找文件}}
+\begin{lstlisting}
+find . -name src -type d
+find . -path '*/test/*.py' -type f
+find . -mtime -1
+find . -size +500k -si
+\end{lstlisting}
+\section{\textcolor{blue}{Shell简单的替代和删除操作}}
+\begin{lstlisting}
+find . -name '*.tmp' -exec rm {} \;
+find . -name '*.png' -exec convert {} {}.jpg \;
+\end{lstlisting}
+\section{\textcolor{blue}{Vim Commands}}
+\begin{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.2]{picturevim.png}
+    \caption{Elliptic Paraboloid}
+    \end{figure} 
+    \item \texttt{i}：切换到输入模式。
+    \item \texttt{a}：切换到插入模式。
+    \item \texttt{x}：删除当前光标所在字符。
+    \item \texttt{u}：撤销上一次操作。
+    \item \texttt{ctrl+r}：重做上一次的操作。
+    \item \texttt{:wq}：保存并退出。
+    \item \texttt{\textbackslash sudo vim 文件名}：以管理员权限打开文件。
+    \item \texttt{:s/foo/bar/g}：在整个文件把 \texttt{foo} 改成 \texttt{bar}。
+\end{itemize}
+\section{\textcolor{blue}{Regular expression}}
+\begin{itemize}
+  \item *：匹配前面的模式零次或多次。
+  \item +：匹配前面的模式一次或多次。
+  \item?：匹配前面的模式零次或一次。
+  \item \{n\}：匹配前面的模式恰好 n 次。
+  \item \{n,\}：匹配前面的模式至少 n 次。
+  \item \{n,m\}：匹配前面的模式至少 n 次且不超过 m 次。
+  \item [[a-z]]：匹配括号内的任意一个字符。例如，[abc] 匹配字符 "a"、"b" 或 "c"。 
+  \item 课后作业小练习：匹配你的 QQ号 \\ \texttt{[0-9]+\{5,11\}}
+\end{itemize}
+
+\section{\textcolor{blue}{正则练习1}}
+\begin{itemize}
+\item \verb|...\.| \\ 匹配cat. 896. ?=+. \\skip abc1
+\end{itemize}
+\section{\textcolor{blue}{正则练习2}}
+\begin{itemize}
+\item \verb|[cmf]an| \\ 匹配can fan man \\skip dan ran pan
+\end{itemize}
+\section{\textcolor{blue}{正则练习3}}
+\begin{itemize}
+\item \verb|[^b]og| \\ 匹配hog dog not bog
+\end{itemize}
+\section{\textcolor{blue}{正则练习4}}
+\begin{itemize}
+\item \verb|[A-C][n-p][a-c]| \\ 匹配 Ana Bob Cpc \\skip aax bby ccz
+\end{itemize}
+\section{\textcolor{blue}{正则练习5}}
+\begin{itemize}
+\item \verb|waz{3,5}up| \\ 匹配wazzzzzup wazzzup \\skip wazup
+\end{itemize}
+\section{\textcolor{blue}{正则练习6}}
+\begin{itemize}
+\item \verb|a{2,4}b{0,4}c{1,2}| \\ 匹配aaaabcc aabbbbc aacc skip a
+\end{itemize}
+\section{\textcolor{blue}{正则练习7}}
+\begin{itemize}
+\item \verb|\d+ files? found\?| \\ 匹配1 file found?  2 files found? 24 files found?
+\\ skip No files found.
+\end{itemize}
+\section{\textcolor{blue}{正则练习8}}
+\begin{itemize}
+\item \verb|\d\.\s+abc| \\ 匹配 " abc" \\skip"abc"
+\end{itemize}
+\section{\textcolor{blue}{git记录}}
+\begin{lstlisting}
+$ git push -u origin main
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 20 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 2.79 KiB | 2.79 MiB/s, done.
+Total 7 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), done.
+To github.com:YAYaun/2024.git
+   6e418e1..5035f2d  main -> main
+branch 'main' set up to track 'origin/main'.                                                                                                                    
+\end{lstlisting}
+\end{document}
