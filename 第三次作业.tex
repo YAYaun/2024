@@ -1,0 +1,248 @@
+\documentclass{article}  
+\usepackage{xcolor}  
+\usepackage{listings}  
+\usepackage[UTF8]{ctex}  
+  
+\lstset{  
+    basicstyle=\ttfamily,  
+    numbers=left,  
+    numberstyle=\small,  
+    frame=single,  
+    showstringspaces=false,  
+    language=Python  
+}  
+  
+\begin{document}  
+\title{\textcolor{red}{中国海洋大学实验报告}\\命令行环境, Python入门基础, Python视觉应用}  
+\author{袁东霖}  
+\date{2024/9/6}  
+\maketitle  
+https://github.com/YAYaun/2024 \\
+\section{\textcolor{blue}{命令行环境}}  
+命令行环境课后作业1 \\  
+结束所有的 sleep 命令而不用 pid: \texttt{pkill -af sleep} \\  
+如何在某个进程结束后再进行指定的命令:  
+\begin{lstlisting}  
+pidwait() {    
+  while kill -0 $1; do  
+    sleep 1    
+  done    
+  ls    
+}  
+\end{lstlisting}  
+别名: \\  
+\begin{lstlisting}
+\texttt{alias dc='cd'} \\
+\end{lstlisting}  
+这样我们错误的将 cd 输入为 dc 时也能正确执行 \\  
+\section{\textcolor{blue}{命令行结束进程}}
+\begin{lstlisting}
+import signal, time
+def handler(signum, time):
+    print("\nI got a SIGINT, but I am not stopping")
+signal.signal(signal.SIGINT, handler)
+i = 0
+while True:
+    time.sleep(.1)
+    print("\r{}".format(i), end="")
+    i += 1
+\end{lstlisting}
+\section{\textcolor{blue}{ssh配置远端设备使用}}
+远端设备使用:  
+\begin{lstlisting}  
+ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519
+\end{lstlisting}  
+创建一个 ssh 密钥对 \\  
+.ssh/config 中添加内容:  
+\begin{lstlisting}  
+Host vm  
+  User username_goes_here  
+  HostName ip_goes_here  
+  IdentityFile ~/.ssh/id_name  
+  LocalForward 9999 localhost:8888  
+\end{lstlisting}  
+\texttt{ssh-copy-id vm} 将自己的 ssh 密钥拷贝到服务器 \\  
+之后使用 \texttt{ssh vm} 就可以进行免密登录  
+\\ 接下来是需要拷贝大量文件时可以用scp命令遍历相关路径
+\begin{lstlisting}
+scp path/to/local_file remote_host:path/to/remote_file
+\end{lstlisting}
+rsync对scp进行了相关改进,还可以基于--partial标记实现断电续传
+\section{\textcolor{blue}{终端多路复用}}
+\verb+tmux 开始一个新的会话+
+\verb+tmux new -s NAME 以指定名称开始一个新的会话+\\
+\verb+tmux ls 列出当前所有会话+\\
+\verb+在 tmux 中输入 <C-b> d ，将当前会话分离+\\
+\verb+tmux a 重新连接最后一个会话。您也可以通过 -t 来指定具体的会话+\\
+\section{\textcolor{blue}{Python简介}}
+Python 是一种解释型语言： 这意味着开发过程中没有了编译这个环节。\\
+Python 是交互式语言： 这意味着，您可以在一个 Python 提示符 >>> 后直接执行代码。\\
+Python 是面向对象语言: 这意味着Python支持面向对象的风格或代码封装在对象的编程技术
+\section{\textcolor{blue}{Python第三方库的安装}}
+在pycharm中可以通过镜像网站安装,pycharm官方网址太慢
+\section{\textcolor{blue}{Python正则表达式}}
+来自菜鸟教程
+\begin{lstlisting}
+import re
+print(re.match('www', 'www.runoob.com').span())
+print(re.match('com', 'www.runoob.com'))
+\end{lstlisting}
+\section{\textcolor{blue}{Python循环}}
+\begin{lstlisting}
+while condition:
+    \texttt{these are your codes}
+for number in sequences:
+    \texttt{these are your codes}
+\end{lstlisting}
+\section{\textcolor{blue}{Python元组}}
+无法被改变
+\begin{lstlisting}
+tup1 = ('1924', '10', 25, 2005)
+tup2 = (1, 2, 3, 4, 5 )
+tup3 = "a", "b", "c", "d"
+\end{lstlisting}
+\section{\textcolor{blue}{Python字典}}
+\begin{lstlisting}
+>>> dict = {'a': 1, 'b': 2, 'b': '3'}
+>>> dict['b']
+'3'
+>>> dict
+{'a': 1, 'b': '3'}  
+\end{lstlisting}
+\section{\textcolor{blue}{Python质数判断}}  
+利用基本知识写的判断质数:  
+\begin{lstlisting}  
+def isprime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+n = int(input("int please: "))
+print(isprime(n))  
+\end{lstlisting}  
+\section{\textcolor{blue}{Python基本语法}}
+\begin{itemize}
+\item if elif
+\item while:
+\item def function(peremeter):
+\item 以缩进为语块
+\end{itemize}
+\section{\textcolor{blue}{Python面向对象}}
+\begin{lstlisting}
+class Animal:
+   age = 0
+   def __init__(age, name):
+      self.name = name
+      self.age = age56dddsaxfttffffff
+\end{lstlisting}
+\section{\textcolor{blue}{Python三维画图}}
+\begin{lstlisting}
+import numpy as np
+z = np.linspace(0,13,1000)
+x = 5*np.sin(z)
+y = 5*np.cos(z)
+zd = 13*np.random.random(100)
+xd = 5*np.sin(zd)
+yd = 5*np.cos(zd)
+ax1.scatter3D(xd,yd,zd, cmap='Blues') 
+ax1.plot3D(x,y,z,'gray') 
+plt.show()
+\end{lstlisting}
+\section{\textcolor{blue}{Python等高线绘图}}
+\begin{lstlisting}
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+fig4 = plt.figure()
+ax4 = plt.axes(projection='3d')
+xx = np.arange(-5,5,0.1)
+yy = np.arange(-5,5,0.1)
+X, Y = np.meshgrid(xx, yy)
+Z = np.sin(np.sqrt(X**2+Y**2))
+ax4.contour(X,Y,Z,zdir='z', offset=-3,cmap="rainbow")  
+ax4.contour(X,Y,Z,zdir='x', offset=-6,cmap="rainbow") 
+ax4.contour(X,Y,Z,zdir='y', offset=6,cmap="rainbow")   
+#ax4.contourf(X,Y,Z,zdir='y', offset=6,cmap="rainbow")  
+ax4.set_xlabel('X')
+ax4.set_xlim(-6, 4) 
+ax4.set_ylabel('Y')
+ax4.set_ylim(-4, 6)
+ax4.set_zlabel('Z')
+ax4.set_zlim(-3, 3)
+plt.show()
+\end{lstlisting}
+\section{\textcolor{blue}{PythonJit}}
+\begin{itemize}
+\item jit可以加速数学计算
+\item jit并不能加快所有代码
+\item 函数加jit时是不会被编译报错的，需要先调试后再加jit
+\end{itemize}
+\section{\textcolor{blue}{Python图像数组化}}
+\begin{itemize}
+\item 图像数组化\\
+\begin{lstlisting}
+from PIL import Image
+from pylab import *
+im = array(Image.open(r'C:\Users\11378\Pictures\picture.jpg'))
+imshow(im)
+x = [100,100,400,400]
+y = [200,500,200,500]
+plot(x,y,'r*')
+plot(x[:2],y[:2])
+title('Plotting: "empire.jpg"')
+show()
+\end{lstlisting}
+\end{itemize}
+\section{\textcolor{blue}{Python绘制散点图}}
+\begin{itemize}
+\item 绘制散点图
+\begin{lstlisting}  
+import matplotlib.pyplot as plt  
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  
+y = [2, 3, 5, 7, 8, 5, 6, 9, 11, 5] 
+  
+plt.scatter(x, y)
+  
+plt.xlabel('X')    
+plt.ylabel('Y')  
+plt.title('title')  
+plt.show()
+\end{lstlisting}
+\end{itemize}
+\section{\textcolor{blue}{Python图像导数灰暗显示}}
+\begin{lstlisting}
+from PIL import Image
+ from numpy import *
+ from scipy.ndimage import filters
+ im = array(Image.open('empire.jpg').convert('L'))
+imx = zeros(im.shape)
+ filters.sobel(im,1,imx)
+ imy = zeros(im.shape)
+ filters.sobel(im,0,imy)
+ magnitude = sqrt(imx**2+imy**2)
+\end{lstlisting}
+\section{\textcolor{blue}{Python课后作业}} 
+\begin{itemize}
+\item 下面是课后作业,用高斯模糊后，原数组减去高斯模糊的数组
+\begin{lstlisting}  
+from PIL import Image, ImageFilter  
+image = Image.open(r'C:\Users\11378\Pictures\picture.jpg')  
+blurred_image = image.filter(ImageFilter.GaussianBlur(radius=5))  
+width, height = image.size  
+image_diff = Image.new('RGB', (width, height))  
+for x in range(width):  
+    for y in range(height):  
+        original_pixel = image.getpixel((x, y))  
+        blurred_pixel = blurred_image.getpixel((x, y))  
+        diff_pixel = (  
+            abs(original_pixel[0] - blurred_pixel[0]),  
+            abs(original_pixel[1] - blurred_pixel[1]),  
+            abs(original_pixel[2] - blurred_pixel[2])  
+        )  
+        image_diff.putpixel((x, y), diff_pixel)  
+image_diff.show()  
+image_diff.save('path_to_save_diff_image.jpg')
+\end{lstlisting}   
+\end{itemize}
+\end{document} 
